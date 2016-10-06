@@ -24,56 +24,54 @@
    - ***** END LICENSE BLOCK ***** -->
 
 <trackerinfo
-	type="mam"
-	shortName="MAM"
-	longName="My Anonamouse"
-	siteName="www.myanonamouse.net">
+	type="inf-t"
+	shortName="INF-T"
+	longName="Infinity-T"
+	siteName="https://infinity-t.org">
 
 	<settings>
-		<cookie_description/>
-		<description text="&lt;br&gt;&lt;strong&gt;Required Keys:&lt;/strong&gt; mam_id (Changes monthly)."/>
-		<cookie/>
+		<description text="Paste (Ctrl+V) any Infinity-T torrent direct download (RSS) link into the text box below to automatically extract passkey."/>
+		<passkey
+			tooltiptext="The passkey in your Infinity-T RSS feed."
+			pasteRegex="[&amp;]passkey=([\da-fA-F]{32})"/>
 	</settings>
 
 	<servers>
 		<server
-			network="ANONAMOUSE"
-			serverNames="irc.myanonamouse.net"
+			network="Infinity-T"
+			serverNames="irc.infinity-t.org"
 			channelNames="#announce"
-			announcerNames="MouseBot"
+			announcerNames="Infinity-T"
 			/>
 	</servers>
 
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--New Torrent :  A Madman Dreams of Turing Machines [REQUESTED] Category: ( Ebooks - General Non-Fiction ) Size: ( 1.66 MB ) Link: ( https://www.myanonamouse.net/t/199645 )-->
-				<!--New Torrent :  The Economist - 7 November 2015 (pdf) By: The Economist Group Category: ( Ebooks - Magazines/Newspapers ) Size: ( 62.06 MB ) Link: ( https://www.myanonamouse.net/t/273837 ) VIP-->
-				<regex value="New Torrent:(.*) Category:\s*\((.*)\) Size: \((.*)\) Link: \(\s*https?\:\/\/([^\/]+\/).*?(\d+)\s*\)\s*(VIP)?"/>
+				<!-- NEW TORRENT :: Ballers.2015.S02E03.HDTV.x264-KILLERS :: TV/SD :: https://infinity-t.org/details.php?id=19 :: 234.56 MB -->
+				<!-- NEW TORRENT :: [HoundDawgs]HippoEDIT.v1.60.18.x64-LAXiTY :: XXX :: https://infinity-t.org/details.php?id=7 :: 8.15 MB [FREELEECH] -->
+				<regex value="NEW TORRENT :: (.*) :: (.*) :: https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+) :: (.*) (\[FREELEECH\])"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="category"/>
-					<var name="torrentSize"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
-					<var name="$vip"/>
+					<var name="torrentSize"/>
+					<var name="$freeleech"/>
 				</vars>
 			</extract>
 		</linepatterns>
 		<linematched>
-			<var name="freeleech">
-				<string value="false"/>
-			</var>
-			<setregex srcvar="$vip" regex="VIP" varName="freeleech" newValue="true"/>
+			<setregex srcvar="$freeleech" regex="FREELEECH" varName="freeleech" newValue="true"/>
+
 			<var name="torrentUrl">
-				<string value="https://"/>
+				<string value="http://"/>
 				<var name="$baseUrl"/>
-				<string value="tor/download.php?tid="/>
+				<string value="download.php?torrent="/>
 				<var name="$torrentId"/>
+				<string value="&amp;pkey="/>
+				<var name="passkey"/>
 			</var>
-			<http name="cookie">
-				<var name="cookie"/>
-			</http>
 		</linematched>
 		<ignore>
 		</ignore>

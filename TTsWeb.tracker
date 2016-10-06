@@ -24,56 +24,51 @@
    - ***** END LICENSE BLOCK ***** -->
 
 <trackerinfo
-	type="mam"
-	shortName="MAM"
-	longName="My Anonamouse"
-	siteName="www.myanonamouse.net">
+	type="tts"
+	shortName="TTS"
+	longName="TTsWeb"
+	siteName="ttsweb.org">
 
 	<settings>
-		<cookie_description/>
-		<description text="&lt;br&gt;&lt;strong&gt;Required Keys:&lt;/strong&gt; mam_id (Changes monthly)."/>
-		<cookie/>
+		<description text="Paste (Ctrl+V) any TTsWeb torrent direct download (RSS) link into the text box below to automatically extract passkey."/>
+		<passkey
+			tooltiptext="The passkey in your TTsWeb RSS feed."
+			pasteRegex="[&amp;]passkey=([\da-fA-F]{32})"/>
 	</settings>
 
 	<servers>
 		<server
-			network="ANONAMOUSE"
-			serverNames="irc.myanonamouse.net"
+			network="TTsWeb-IRC"
+			serverNames="irc.ttsweb.org"
 			channelNames="#announce"
-			announcerNames="MouseBot"
+			announcerNames="Your_Mom"
 			/>
 	</servers>
 
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--New Torrent :  A Madman Dreams of Turing Machines [REQUESTED] Category: ( Ebooks - General Non-Fiction ) Size: ( 1.66 MB ) Link: ( https://www.myanonamouse.net/t/199645 )-->
-				<!--New Torrent :  The Economist - 7 November 2015 (pdf) By: The Economist Group Category: ( Ebooks - Magazines/Newspapers ) Size: ( 62.06 MB ) Link: ( https://www.myanonamouse.net/t/273837 ) VIP-->
-				<regex value="New Torrent:(.*) Category:\s*\((.*)\) Size: \((.*)\) Link: \(\s*https?\:\/\/([^\/]+\/).*?(\d+)\s*\)\s*(VIP)?"/>
+				<!--New Torrent: Orange.Is.the.New.Black.S01.1080p.Blu-ray.AVC.DTS-HD.MA.5.1-Test Category: Blu-ray Encodes By: KC Size: 137.73 GB Link: https://ttsweb.org/details.php?id=25918-->
+				<regex value="New Torrent:(.*)Category:(.*)By:(.*)Size:(.*)Link: https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="category"/>
+					<var name="uploader"/>
 					<var name="torrentSize"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
-					<var name="$vip"/>
 				</vars>
 			</extract>
 		</linepatterns>
 		<linematched>
-			<var name="freeleech">
-				<string value="false"/>
-			</var>
-			<setregex srcvar="$vip" regex="VIP" varName="freeleech" newValue="true"/>
 			<var name="torrentUrl">
-				<string value="https://"/>
+				<string value="http://"/>
 				<var name="$baseUrl"/>
-				<string value="tor/download.php?tid="/>
+				<string value="download.php?torrent="/>
 				<var name="$torrentId"/>
+				<string value="&amp;torrent_pass="/>
+				<var name="passkey"/>
 			</var>
-			<http name="cookie">
-				<var name="cookie"/>
-			</http>
 		</linematched>
 		<ignore>
 		</ignore>

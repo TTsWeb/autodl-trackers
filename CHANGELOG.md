@@ -3,6 +3,35 @@
 Notable changes for the [autodl-trackers](https://github.com/autodl-community/autodl-trackers) project.
 
 
+## [community-v257](https://github.com/autodl-community/autodl-trackers/releases/tag/community-v257) (2016-09-07)
+
+[Commits](https://github.com/autodl-community/autodl-trackers/compare/community-v256...community-v257)
+
+### Added
+
+* Add TTsWeb.
+
+### Fixed
+
+* Update torrentUrl for Infinity-T.
+
+
+## [community-v256](https://github.com/autodl-community/autodl-trackers/releases/tag/community-v256) (2016-09-02)
+
+[Commits](https://github.com/autodl-community/autodl-trackers/compare/community-v255...community-v256)
+
+### Added
+
+* Add Ininify-T
+* Add WoP
+
+### Fixed
+
+* Update regex for My Anonamouse
+* Update regex for DanishBits
+* Update freeleech regex for AnimeBytes
+
+
 ## [community-v255](https://github.com/autodl-community/autodl-trackers/releases/tag/community-v255) (2016-07-09)
 
 [Commits](https://github.com/autodl-community/autodl-trackers/compare/community-v254...community-v255)
@@ -12,7 +41,7 @@ Notable changes for the [autodl-trackers](https://github.com/autodl-community/au
 * Remove StopThePresses.
 * Remove ToTV.
 
-### Changed
+### Fixed
 
 * Update torrentUrl for BIT-HDTV.
 * Follow 302 links for IPTorrents.
@@ -30,6 +59,9 @@ Notable changes for the [autodl-trackers](https://github.com/autodl-community/au
 ### Changed
 
 * Force SSL for TorrentLeech.
+
+### Fixed
+
 * Update torrentUrl for PolishSource.
 
 
