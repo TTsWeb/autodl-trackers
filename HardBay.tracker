@@ -24,66 +24,54 @@
    - ***** END LICENSE BLOCK ***** -->
 
 <trackerinfo
-	type="tg"
-	shortName="tg"
-	longName="TorrentGigs"
-	siteName="">
+	type="hbclub"
+	shortName="HBCLUB"
+	longName="HardBay"
+	siteName="HardBay.club">
 
 	<settings>
-		<description text="Paste your passkey. In ssl field put 0 for non ssl tracker or 1 for ssl tracker."/>
-		<passkey pasteGroup="passkey,ssl"/>
-		<textbox
-			name="ssl"
-			text="ssl"
-			accesskey="i"
-			tooltiptext="0 for non ssl tracker, 1 for ssl tracker"
-		/>
-
+		<!--https://hardbay.club/rss.php?passkey=YYYY-->
+		<description text="Go to https://hardbay.club/rss to get the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>
+		<passkey
+			tooltiptext="The passkey in your HardBay RSS feed."
+			pasteRegex="[\?&amp;]passkey=([\da-fA-F]{32})"/>
 	</settings>
 
 	<servers>
 		<server
-			network="TorrentGigs"
-			serverNames="irc.btgigs.info"
-			channelNames="#pre"
-			announcerNames="Info"
+			network="Hardbay IRC Network"
+			serverNames="irc.hardbay.club"
+			channelNames="#hardbay.announce"
+			announcerNames="Announce"
 			/>
 	</servers>
 
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--[REQ]  TV/Seriale || Westworld S01E08 1080p HDTV X264-BATV || Rozmiar: 5.71 GB || 0 || - https://btgigs.info/details.php?id=449457-->
-				<!---->
-				<!--TV/Seriale || Westworld S01E08 1080p HDTV X264-BATV || Rozmiar: 5.71 GB || 0 || - https://btgigs.info/details.php?id=449457-->
-				<regex value="^(.*) \|\| (.*) \|\| Rozmiar: (.*) \|\| (\d) \|\| \- https\:\/\/([^\/]+\/).*id=(\d+)"/>
+				<!--New torrent uploaded! :: Memorize_-_Experience-(XBONE120)-WEB-2016-HB :: Hardstyle :: https://www.hardbay.club/torrent/5959/-->
+				<regex value="^New torrent uploaded! :: (.*) :: (.*) :: https?\:\/\/([^\/]+\/)torrent/(\d+)\/"/>
 				<vars>
-					<var name="category"/>
 					<var name="torrentName"/>
-					<var name="torrentSize"/>
-					<var name="freeleech"/>
+					<var name="category"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
 				</vars>
 			</extract>
 		</linepatterns>
 		<linematched>
-			<setregex srcvar="$freeleech" regex="1" varName="freeleech" newValue="true"/>
 			<var name="torrentUrl">
+				<!--https://hardbay.club/download.php?id=xxx&passkey=YYYY-->
 				<string value="https://"/>
 				<var name="$baseUrl"/>
-				<string value="download_rss.php/"/>
+				<string value="download.php?id="/>
 				<var name="$torrentId"/>
-				<string value="/"/>
+				<string value="&amp;passkey="/>
 				<var name="passkey"/>
-				<string value="/"/>
-				<var name="ssl"/>
-				<string value="/"/>
-				<varenc name="torrentName"/>
-				<string value=".torrent"/>
 			</var>
 		</linematched>
 		<ignore>
+			<regex value="^New torrent uploaded! :: Dupe\. Release already exists\. ::" expected="false"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
